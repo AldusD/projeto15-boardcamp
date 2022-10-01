@@ -3,7 +3,6 @@ import STATUS from "../enums/status.js";
 import gameSchema from "../schemas/game.schema.js";
 
 const verifyGame = async (req, res, next) => {
-    console.log("middleware")
     const { name, image, stockTotal, categoryId, pricePerDay } = req.body;
     const isValidGame = gameSchema.validate( { name, image, stockTotal, categoryId, pricePerDay } );
     if(isValidGame.error) return res.sendStatus(STATUS.UNPROCESSABLE_ENTITY);
@@ -22,7 +21,6 @@ const verifyGame = async (req, res, next) => {
         res.sendStatus(STATUS.SERVER_ERROR);
     }
     next();
-    console.log("middleware")
 }
 
 export { verifyGame };

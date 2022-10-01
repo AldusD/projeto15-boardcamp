@@ -3,32 +3,19 @@ import STATUS from "../enums/status.js";
 
 const getGames = async (req, res) => {
     const name = req.query.name || '';
-    console.log(name)
+    const query = `
+        SELECT games.id, games.name, games.image, games."stockTotal",
+        games."categoryId", games."pricePerDay", categories.name as "categoryName"  
+        FROM games 
+        JOIN categories ON games."categoryId" = categories.id`;
+        
     try {
-        let games = ''
-        if (name) {
-            const param = "$1";
-            console.log(param)
-            games = await connection.query(`
-            SELECT 
-                games.id, games.name, games.image, games."stockTotal",
-                games."categoryId", games."pricePerDay", categories.name as "categoryName"  
-            FROM games 
-            JOIN categories ON games."categoryId" = categories.id
-            WHERE games.name LIKE $1 ;`, ['%' + name + '%']);
-            return res.send(games.rows).status(STATUS.OK);
+        const games = (name) ?
+            await connection.query(`${query} WHERE games.name LIKE $1 ;`, ['%' + name + '%'])
+            :
+            await connection.query(query);
         
-        } else {
-            games = await connection.query(`
-            SELECT 
-                games.id, games.name, games.image, games."stockTotal",
-                games."categoryId", games."pricePerDay", categories.name as "categoryName"  
-            FROM games 
-            JOIN categories ON games."categoryId" = categories.id`);
-            return res.send(games.rows).status(STATUS.OK);
-        }       
-
-        
+        return res.send(games.rows).status(STATUS.OK);
     } catch (error) {
         console.log(error);
         return res.sendStatus(STATUS.SERVER_ERROR);
