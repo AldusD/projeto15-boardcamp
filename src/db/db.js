@@ -3,10 +3,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const Pool = { pg };
+const { Pool } = pg;
 
 const connection = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URI,
   });
 
 export default connection;
