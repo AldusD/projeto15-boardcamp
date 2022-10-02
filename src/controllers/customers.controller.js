@@ -46,4 +46,21 @@ const registerCustomer = async (req, res) => {
     }
 }
 
-export { getCustomers, getCustomerById, registerCustomer };
+const updateCustomer = async (req, res) => {
+    const { name, phone, cpf, birthday } = res.locals.customer;
+    const { id } = req.params;
+
+    try {
+        const customer = await connection.query(`
+            UPDATE customers SET name = $1, phone = $2, cpf = $3, birthday = $4 
+            WHERE id = $5`, 
+            [name, phone, cpf, birthday, id]);
+
+        return res.sendStatus(STATUS.OK);    
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(STATUS.SERVER_ERROR);
+    }
+}
+
+export { getCustomers, getCustomerById, registerCustomer, updateCustomer };

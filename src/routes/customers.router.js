@@ -6,7 +6,8 @@ import * as middleware from '../middlewares/customers.middlewares.js';
 const router = express.Router();
 
 router.get("/customers", controller.getCustomers);
+router.post("/customers", middleware.verifyCustomerSchema, middleware.verifyCustomerConflict, controller.registerCustomer);
 router.get("/customers/:id", controller.getCustomerById);
-router.post("/customers", middleware.verifyCustomer, controller.registerCustomer);
+router.put("/customers/:id", middleware.verifyCustomerSchema, middleware.verifyCustomerExistence, controller.updateCustomer);
 
 export default router;

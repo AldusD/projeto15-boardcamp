@@ -3,7 +3,7 @@ import cors from 'cors';
 
 import categoryRouter from './routes/categories.router.js';
 import gameRouter from './routes/games.router.js';
-import customerRouter from './routes/custumers.router.js';
+import customerRouter from './routes/customers.router.js';
 
 const app = express();
 app.use(json(), cors());
