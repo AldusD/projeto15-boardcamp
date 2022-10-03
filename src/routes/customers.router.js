@@ -8,6 +8,6 @@ const router = express.Router();
 router.get("/customers", controller.getCustomers);
 router.post("/customers", middleware.verifyCustomerSchema, middleware.verifyCustomerConflict, controller.registerCustomer);
 router.get("/customers/:id", controller.getCustomerById);
-router.put("/customers/:id", middleware.verifyCustomerSchema, middleware.verifyCustomerExistence, controller.updateCustomer);
+router.put("/customers/:id", middleware.verifyCustomerSchema, middleware.verifyCustomerExistence, middleware.verifyCustomerConflict, controller.updateCustomer);
 
 export default router;

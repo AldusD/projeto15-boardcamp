@@ -1,6 +1,6 @@
 const TABLES = Object.freeze({
     CATEGORIES: 'categories',
-    COSTUMERS: 'costumers',
+    CUSTOMERS: 'customers',
     GAMES: 'games',
     RENTALS: 'rentals'    
 })
